@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App-like Container</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh; /* Full height of the viewport */
+            position: relative; /* Allow positioning of the logout button */
+        }
+
+        #container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: #f0f0f0;
+            padding: 10px;
+        }
+
+        #appHeader {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        #linksContainer {
+            display: flex;
+            flex-wrap: wrap;  /* Allow buttons to wrap to the next line */
+            gap: 10px;        /* Space between buttons */
+            padding: 10px;
+            justify-content: center;  /* Center buttons horizontally */
+        }
+
+        .linkButton {
+            padding: 8px 16px;   /* Smaller padding for smaller buttons */
+            font-size: 14px;      /* Smaller text */
+            background-color: #008CBA;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            text-align: center;
+            transition: background-color 0.3s ease;
+            min-width: 120px;     /* Ensure buttons have a minimum width */
+        }
+
+        .linkButton:hover {
+            background-color: #005f73;
+        }
+
+        #appContent {
+            flex: 1;
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px auto; /* Center the content area with margins */
+            width: 100%; /* Set to 100% to fit the container's width */
+            box-sizing: border-box; /* Ensures padding doesn't cause overflow */
+        }
+
+        iframe {
+            width: 100%;
+            height: 80vh; /* Adjust height as needed */
+            border: none;
+        }
+
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 768px) {
+            #appContent {
+                width: 95%;  /* For smaller screens, take up more width */
+            }
+
+            iframe {
+                height: 60vh; /* Adjust iframe height on smaller screens */
+            }
+        }
+
+        /* Styling for logout button */
+        #logoutButton {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: #f44336; /* Red background for the logout button */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none; /* Remove underline from the link */
+        }
+
+        #logoutButton:hover {
+            background-color: #d32f2f; /* Darker red when hovering */
+        }
+    </style>
+</head>
+<body>
+    <!-- Logout button triggers JavaScript for the same window -->
+    <button id="logoutButton" onclick="logout()">Logout</button>
+
+    <div id="container">
+        <div id="appHeader">
+            <h1>Woodvale Maintenance Department</h1>
+        </div>
+
+        <!-- Link buttons in a row of 4 -->
+        <div id="linksContainer">
+            <button class="linkButton" onclick="openLink('https://docs.google.com/spreadsheets/d/e/2PACX-1vTGeOEC6gdtCgHkuXVza9UoTpjR10duz8kqGDw6yYDfk4vHXSForbiH-khJO_vq9IkzwRSSeQ6PTEqZ/pubhtml')" aria-label="Open Dashboard">Occupied Unit Schedule</button>
+            <button class="linkButton" onclick="openLink('https://docs.google.com/spreadsheets/d/e/2PACX-1vRrsnZqT4YHHWrzZ3gJ3P6NUyPN9avrhskmDfmoA_XH_v0MTbZBnTKRCTni893W83OoYu4FkhXGyRq1/pubhtml')" aria-label="View Balance Summary">Vacant Unit Schedule</button>
+            <button class="linkButton" onclick="openLink('https://docs.google.com/spreadsheets/d/e/2PACX-1vR7SB3diq7bnD0-RM5MWLNBtms8thNH-WRTXnjtzmZxWitPVchCJssgnD0J2iq4K5E-mZZju7FIgaGe/pubhtml')" aria-label="Access Client Details">Property Work Schedule</button>
+            <button class="linkButton" onclick="openLink('https://docs.google.com/spreadsheets/d/e/2PACX-1vRdgyHl6MjX7perRwncP0G9mg1dzoPDQKmMJ1okl-6RtVr8ovF0kDTMnBU27Ce7Z316HPS4e8DOOlc9/pubhtml')" aria-label="More Resources">Vendor List</button>
+        </div>
+        <div id="linksContainer">
+            <button class="linkButton" onclick="openLink('https://docs.google.com/document/d/e/2PACX-1vRYRNDlNDzy7JyE__GI6D-nyfnqmXss5jY1Z_fu2pkB3gggB0bQta_ca8zVLbctvqxp7OgvLoHZn8fD/pub')" aria-label="Open Dashboard">Maintenance Forms</button>
+            <button class="linkButton" onclick="openLink('https://docs.google.com/document/d/e/2PACX-1vQxZkzFS_NsGFpxtSyi3ha4HJNLonPv5KBeSI-yytlgOfywf4P7-Ph1NF1sgLpIeedSqSVsYBUP-Kc0/pub')" aria-label="View Balance Summary">Preventive Maintenance</button>
+            <button class="linkButton" onclick="openLink('https://docs.google.com/spreadsheets/d/e/2PACX-1vT-hs0fwZcyBdKw5vgl0e7d0NnLBScwlw1kM75LpWZ-Qm47CCsqWqRWoRyogXyh1JvMVbk8aujnxsH5/pubhtml')" aria-label="Access Client Details">Appliances Log</button>
+            <button class="linkButton" onclick="openLink('https://docs.google.com/spreadsheets/d/e/2PACX-1vSdgMZBYTJnDwDYNvGk8E35vtTi3VD5dqiAmf1cXrLLKqDQVqlaltJPiPnIdKhfcPS1OO17Iukj1Uwx/pubhtml')" aria-label="More Resources">AC Refrigerant Log</button>
+        </div>
+        <div id="linksContainer">
+            <button class="linkButton" onclick="openLink('https://docs.google.com/spreadsheets/d/e/2PACX-1vTtKxU64Ly6i5HzzoRruYLdZYSopifGzly-gYzq3BdBLecJ5wNVqPcnSjA8OEQ75Fb8uV20QfOTGvj5/pubhtml')" aria-label="Open Dashboard">Snow Removal Log</button>
+            <button class="linkButton" onclick="openLink('https://docs.google.com/spreadsheets/d/e/2PACX-1vTU7Vve4sHGQpisX3Yg7aqZWZsx7KiY4rf2ygZrdwApR3y3pNov_Qc0S_XC8S4doJp_1dnjohu2DLIC/pubhtml')" aria-label="View Balance Summary">On-Call Calendar</button>
+            <button class="linkButton" onclick="openLink('https://docs.google.com/spreadsheets/d/e/2PACX-1vRml_1PukcaOgvrFDEtciXuNbNrr9NAfVmkCKL5fBSwbPqEwrI56Gw-ISJhDRxGn5Cp-ACiCl0gbrOE/pubhtml')" aria-label="Access Client Details">Heat Exchangers</button>
+            <button class="linkButton" onclick="openLink('https://docs.google.com/spreadsheets/d/e/2PACX-1vTy0Bc7WhTKqq59Lq93fs2RdlZ447jCTD99rRMgzx1TWMGG-7i8RFwKn-C6e7sYhu7RFmULx4mFm0qN/pubhtml')" aria-label="More Resources">Make Ready Board</button>
+        </div>
+
+        <div id="appContent">
+            <iframe id="appFrame" src=""></iframe>
+        </div>
+    </div>
+
+    <script>
+        // Function to open a link inside the iframe
+        function openLink(url) {
+            var iframe = document.getElementById("appFrame");
+            iframe.src = url; // Set the iframe's source to the new URL
+        }
+
+        // Function to handle logout
+        function logout() {
+            // First, clear any cached history entries to prevent using back button
+            history.pushState(null, null, location.href);
+            history.back();
+            history.forward();
+
+            // Redirect the user to the specified logout URL
+            window.location.href = 'https://www.wmhomeimprovement.com/logout321';
+        }
+    </script>
+</body>
+</html>
